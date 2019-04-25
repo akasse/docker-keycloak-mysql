@@ -1,0 +1,63 @@
+version: "2"
+services:
+
+    mysql:
+        image: mysql:5.7
+        container_name: ak_mysql
+        labels:
+            - com.akasse.description= devops with keycloak by akasse"
+            - com.akasse.username=${KEYCLOACK_ADMIN}
+            - com.akasse.password=${KEYCLOACK_PASSWORD}
+            - com.akasse.email=${KEYCLOACK_AUTOR}
+        #restart: always
+        environment:
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}  
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_DATABASE=${DB_DATABASE}
+            - MYSQL_PASSWORD=${DB_PASSWORD}  
+        volumes:
+            - ./mysql-data:/var/lib/mysql
+        ports:
+            - '3306:3306'
+    adminer:
+        image: adminer:4.7.1
+        container_name : ${ADMINER_NAME}
+        hostname: ${ADMINER_HOSTNAME}
+        labels:
+            - com.akasse.description= devops with ADMINER by akasse"
+            - com.akasse.email=${ADMINER_AUTOR}
+        #restart: always
+        depends_on:
+            - mysql
+        links:
+            - mysql:mysql
+        ports:
+            - 2020:8080
+
+    keycloak:
+        image: jboss/keycloak:6.0.0
+        container_name : ${KEYCLOACK_NAME}
+        hostname: ${KEYCLOACK_HOSTNAME}
+        labels:
+            - com.akasse.description= devops with keycloak by akasse"
+            - com.akasse.username=${KEYCLOACK_ADMIN}
+            - com.akasse.password=${KEYCLOACK_PASSWORD}
+            - com.akasse.email=${KEYCLOACK_AUTOR}
+        environment:
+            - KEYCLOAK_USER=${KEYCLOACK_ADMIN}
+            - KEYCLOAK_PASSWORD=${KEYCLOACK_PASSWORD}
+            #- KEYCLOAK_IMPORT=/tmp/example-realm.json 
+            - DB_ADDR=mysql
+            - DB_VENDOR=MYSQL
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USER=${DB_USER}
+            - DB_PASSWORD=${DB_PASSWORD}
+        #volumes:
+        #    - ./keycloak-data/example-realm.json:/tmp/example-realm.json
+        ports:
+            - 2015:8080   # Web interface
+        depends_on:
+            - mysql
+        links:
+            - mysql:mysql
+

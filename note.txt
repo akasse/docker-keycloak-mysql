@@ -1,0 +1,13 @@
+docker tag local-image:tagname new-repo:tagname
+docker tag akasse/devops-keycloak:1.0 akasse/devops-keycloak:1.0
+
+docker tag akasse/devops-keycloak:1.1 akasse/devops-keycloak:1.1
+
+docker push new-repo:tagname
+docker push akasse/devops-keycloak:1.0
+
+Importing a realm
+To create an admin account and import a previously exported realm run:
+
+docker run -e KEYCLOAK_USER=<USERNAME> -e KEYCLOAK_PASSWORD=<PASSWORD> \
+    -e KEYCLOAK_IMPORT=/tmp/example-realm.json -v /tmp/example-realm.json:/tmp/example-realm.json jboss/keycloak
