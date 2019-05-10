@@ -3,7 +3,6 @@
 
 docker tag local-image:tagname new-repo:tagname
 docker tag akasse/devops-keyloack:1.0 akasse/devops-keyloack:1.0
-
 docker tag akasse/devops-keyloack:1.0 akasse/devops-keyloack:1.0
 
 docker push new-repo:tagname
