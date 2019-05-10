@@ -2,8 +2,12 @@
 # Installation et configuration de keyloack 
 
 docker tag local-image:tagname new-repo:tagname
+docker tag akasse/devops-keycloak:1.0 akasse/devops-keycloak:1.0
+docker push akasse/devops-keycloak:tagname
 docker tag akasse/devops-keyloack:1.0 akasse/devops-keyloack:1.0
-docker tag akasse/devops-keyloack:1.0 akasse/devops-keyloack:1.0
+
+docker tag akasse/devops-keycloak-mysql:1.0 akasse/devops-keycloak-mysql:1.0
+docker push akasse/devops-keycloak-mysql:1.0
 
 docker push new-repo:tagname
 docker push akasse/devops-keyloack:1.0
